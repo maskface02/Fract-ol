@@ -36,6 +36,7 @@ void	render(t_fractol *f)
 	float	pi;
 	int		nb_iter;
 	int		color;
+	int		t;
 
 	mlx_clear_window(f->mlx, f->win);
 	y = -1;
@@ -47,7 +48,9 @@ void	render(t_fractol *f)
 			pr = (scale_between(x, -2, 2, 0, WIDTH) * f->zoom) + f->shift_x;
 			pi = (scale_between(y, 2, -2, 0, HEIGHT) * f->zoom) + f->shift_y;
 			nb_iter = calculate_iterations(f, pr, pi);
-			color = scale_between(nb_iter, BLACK, WHITE, 1, MAX_ITER);
+			t = (float)nb_iter / MAX_ITER * 255;
+			color = (t << 16) | (t << 8) | t;
+			// color = scale_between(nb_iter, BLACK, WHITE, 1, MAX_ITER);
 			my_put_pixel(f, x, y, color);
 		}
 	}
