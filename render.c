@@ -1,15 +1,14 @@
 #include "fract_ol.h"
 
-float	scale_between(float unscaled_num, float new_min, float new_max,
-		float old_min, float old_max)
+double	scale(double unscaled_num, double new_min, double new_max,
+		double old_max)
 {
-	return ((new_max - new_min) * (unscaled_num - old_min) / (old_max - old_min)
-		+ new_min);
+	return (((new_max - new_min) * (unscaled_num) / old_max) + new_min);
 }
 
-int	calculate_iterations(t_fractol *f, float pr, float pi)
+double	calculate_iterations(t_fractol *f, double pr, double pi)
 {
-	int	n;
+	double	n;
 
 	if (!ft_strncmp(f->name, "M", 1))
 		n = mandelbrot(pr, pi);
@@ -28,29 +27,44 @@ void	my_put_pixel(t_fractol *f, int x, int y, int color)
 	*(int *)pixel = color;
 }
 
+int	lerp(int color1, int color2, double fraction)
+{
+	int(r1), (r2), (r), (g1), (g2), (g), (b1), (b2), (b);
+	r1 = (color1 >> 16) & 0xFF;
+	g1 = (color1 >> 8) & 0xFF;
+	b1 = color1 & 0xFF;
+	r2 = (color2 >> 16) & 0xFF;
+	g2 = (color2 >> 8) & 0xFF;
+	b2 = color2 & 0xFF;
+	r = (int)(r1 + (r2 - r1) * fraction);
+	g = (int)(g1 + (g2 - g1) * fraction);
+	b = (int)(b1 + (b2 - b1) * fraction);
+	return ((r << 16) | (g << 8) | b);
+}
+
 void	render(t_fractol *f)
 {
-	int		x;
-	int		y;
-	float	pr;
-	float	pi;
-	int		nb_iter;
-	int		color;
-	int		t;
-
-	mlx_clear_window(f->mlx, f->win);
-	y = -1;
+	int(x), (y), (color), (idx1), (idx2);
+	double(pr), (pi), (nb_iter), (t), (fraction);
+	(1) && (y = -1, mlx_clear_window(f->mlx, f->win));
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 		{
-			pr = (scale_between(x, -2, 2, 0, WIDTH) * f->zoom) + f->shift_x;
-			pi = (scale_between(y, 2, -2, 0, HEIGHT) * f->zoom) + f->shift_y;
+			pr = (scale(x, -2, 2, WIDTH) * f->zoom) + f->shift_x;
+			pi = (scale(y, -2, 2, HEIGHT) * f->zoom) + f->shift_y;
 			nb_iter = calculate_iterations(f, pr, pi);
-			t = (float)nb_iter / MAX_ITER * 255;
-			color = (t << 16) | (t << 8) | t;
-			// color = scale_between(nb_iter, BLACK, WHITE, 1, MAX_ITER);
+			if (nb_iter >= MAX_ITER)
+				color = 0x000000;
+			else
+			{
+				t = fmod(nb_iter / MAX_ITER * (f->palette_size - 1),
+						f->palette_size - 1);
+				(1) && (idx1 = (int)t, idx2 = (idx1 + 1) % f->palette_size,
+					fraction = t - idx1);
+				color = lerp(f->palette[idx1], f->palette[idx2], fraction);
+			}
 			my_put_pixel(f, x, y, color);
 		}
 	}

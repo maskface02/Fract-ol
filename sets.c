@@ -1,50 +1,67 @@
 #include "fract_ol.h"
 
-int	mandelbrot(float cr, float ci)
+double	mandelbrot(double cr, double ci)
 {
 	int		i;
-	float	zr;
-	float	zi;
-	float	tmp;
+	double	zr;
+	double	zi;
+	double	tmp;
+	double	log_zn;
+	double	nu;
 
 	zr = 0;
 	zi = 0;
-	i = 0;
-	while (i < MAX_ITER)
+	i = -1;
+	while (++i < MAX_ITER)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;
 		tmp = 2 * zr * zi + ci;
 		zr = zr * zr - zi * zi + cr;
 		zi = tmp;
-		i++;
+	}
+	if (i < MAX_ITER)
+	{
+		log_zn = log(zr * zr + zi * zi) / 2.0;
+		nu = log(log_zn / log(2)) / log(2);
+		return (i + 1 - nu);
 	}
 	return (i);
 }
 
-int	julia(t_fractol *f, float zr, float zi)
+double	julia(t_fractol *f, double zr, double zi)
 {
 	int		i;
-	float	tmp;
+	double	tmp;
+	double	log_zn;
+	double	nu;
 
 	i = -1;
 	while (++i < MAX_ITER)
 	{
 		if ((zi * zi + zr * zr) > 4.0)
 			break ;
-		tmp = 2 * zr * zi + f->julia_x;
-		zr = zr * zr - zi * zi + f->julia_y;
+		tmp = 2 * zr * zi + f->julia_y;
+		zr = zr * zr - zi * zi + f->julia_x;
 		zi = tmp;
+	}
+	if (i < MAX_ITER)
+	{
+		log_zn = log(zr * zr + zi * zi) / 2.0;
+		nu = log(log_zn / log(2)) / log(2);
+		return (i + 1 - nu);
 	}
 	return (i);
 }
 
-int	tricorn(float cr, float ci)
+double	tricorn(double cr, double ci)
 {
 	int		i;
-	float	zr;
-	float	zi;
-	float	tmp;
+	double	zr;
+	double	zi;
+	double	tmp;
+	double	log_zn;
+	double	nu;
 
 	zr = cr;
 	zi = ci;
@@ -56,6 +73,12 @@ int	tricorn(float cr, float ci)
 		tmp = -2 * zr * zi + ci;
 		zr = zr * zr - zi * zi + cr;
 		zi = tmp;
+	}
+	if (i < MAX_ITER)
+	{
+		log_zn = log(zr * zr + zi * zi) / 2.0;
+		nu = log(log_zn / log(2)) / log(2);
+		return (i + 1 - nu);
 	}
 	return (i);
 }
