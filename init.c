@@ -6,7 +6,7 @@
 /*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:49:02 by zatais            #+#    #+#             */
-/*   Updated: 2025/04/01 22:57:51 by zatais           ###   ########.fr       */
+/*   Updated: 2025/04/01 23:09:53 by zatais           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	print_err(char *mess, int is_syscall_func, int x)
 void	init_palette(t_fractol *f)
 {
 	static int	palettes[8][6] = {{0x000000, 0x3300FF, 0xFF00FF, 0xFF0000,
-		0xFF6600, 0xFFFF00}, {0x000033, 0x0000FF, 0x00FFFF, 0xFFFFFF, -1},
-	{0xFF00FF, 0x00FF00, 0xFFFF00, 0xFF0000, 0x0000FF, -1}, {0x002200,
-		0x005500, 0x008800, 0x00BB00, 0x00FF00, -1}, {0x2E004F, 0x8A2BE2,
-		0xFF4500, 0xFFD700, 0xFFFFFF, -1}, {0x000000, 0x4B0082, 0x8A2BE2,
-		0x00FFFF, 0xFFFFFF, -1}, {0x00FF00, 0xFF00FF, 0x0000FF, 0xFF0000,
-		0xFFFF00, -1}, {0x000000, 0x332200, 0x664400, 0x996600, 0xCC8800,
+		0xFF6600, 0xFFFF00}, {0x000033, 0x0000FF, 0x00FFFF, 0xFFFFFF},
+	{0xFF00FF, 0x00FF00, 0xFFFF00, 0xFF0000, 0x0000FF}, {0x002200,
+		0x005500, 0x008800, 0x00BB00, 0x00FF00}, {0x2E004F, 0x8A2BE2,
+		0xFF4500, 0xFFD700, 0xFFFFFF}, {0x000000, 0x4B0082, 0x8A2BE2,
+		0x00FFFF, 0xFFFFFF}, {0x00FF00, 0xFF00FF, 0x0000FF, 0xFF0000,
+		0xFFFF00}, {0x000000, 0x332200, 0x664400, 0x996600, 0xCC8800,
 		0xFFAA00}};
 	static int	palette_sizes[8] = {6, 4, 5, 5, 5, 5, 5, 6};
 
