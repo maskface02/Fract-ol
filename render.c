@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 20:49:11 by zatais            #+#    #+#             */
+/*   Updated: 2025/04/01 20:53:37 by zatais           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fract_ol.h"
 
 double	scale(double unscaled_num, double new_min, double new_max,
@@ -29,7 +41,7 @@ void	my_put_pixel(t_fractol *f, int x, int y, int color)
 
 int	lerp(int color1, int color2, double fraction)
 {
-	int(r1), (r2), (r), (g1), (g2), (g), (b1), (b2), (b);
+	int (r1), (r2), (r), (g1), (g2), (g), (b1), (b2), (b);
 	r1 = (color1 >> 16) & 0xFF;
 	g1 = (color1 >> 8) & 0xFF;
 	b1 = color1 & 0xFF;
@@ -44,8 +56,8 @@ int	lerp(int color1, int color2, double fraction)
 
 void	render(t_fractol *f)
 {
-	int(x), (y), (color), (idx1), (idx2);
-	double(pr), (pi), (nb_iter), (t), (fraction);
+	int (x), (y), (color), (idx1), (idx2);
+	double (pr), (pi), (nb_iter), (t), (fraction);
 	(1) && (y = -1, mlx_clear_window(f->mlx, f->win));
 	while (++y < HEIGHT)
 	{

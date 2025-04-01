@@ -1,5 +1,17 @@
-#ifndef FRACT_OL
-# define FRACT_OL
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fract_ol.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 20:48:53 by zatais            #+#    #+#             */
+/*   Updated: 2025/04/01 22:59:10 by zatais           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef FRACT_OL_H
+# define FRACT_OL_H
 
 # define WIDTH 800
 # define HEIGHT 800
@@ -31,6 +43,7 @@ typedef struct s_fractol
 	double	julia_y;
 	int		*palette;
 	int		palette_size;
+	int		i;
 }			t_fractol;
 
 int			ft_strncmp(char *s1, char *s2, size_t n);
@@ -46,4 +59,5 @@ int			mouse_handler(int button, int x, int y, t_fractol *f);
 double		scale(double unscaled_num, double new_min, double new_max,
 				double old_max);
 int			clean_exit(t_fractol *f);
+void		init_palette(t_fractol *f);
 #endif

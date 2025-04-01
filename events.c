@@ -1,20 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   events.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 20:48:35 by zatais            #+#    #+#             */
+/*   Updated: 2025/04/01 20:48:38 by zatais           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fract_ol.h"
 
 int	key_handler(int keysym, t_fractol *f)
 {
 	if (keysym == XK_Escape)
-        clean_exit(f);
-	if (keysym == XK_Left)
-		f->shift_x += (0.5 * f->zoom);
+		clean_exit(f);
 	else if (keysym == XK_Right)
+		f->shift_x += (0.5 * f->zoom);
+	else if (keysym == XK_Left)
 		f->shift_x -= (0.5 * f->zoom);
-	else if (keysym == XK_Up)
-		f->shift_y += (0.5 * f->zoom);
 	else if (keysym == XK_Down)
+		f->shift_y += (0.5 * f->zoom);
+	else if (keysym == XK_Up)
 		f->shift_y -= (0.5 * f->zoom);
+	else if (keysym == XK_plus)
+		f->i = (f->i + 1) % 8;
+	else if (keysym == XK_minus)
+		f->i = (f->i - 1 + 8) % 8;
+	init_palette(f);
 	render(f);
 	return (0);
 }
+
 int	clean_exit(t_fractol *f)
 {
 	mlx_destroy_image(f->mlx, f->img);

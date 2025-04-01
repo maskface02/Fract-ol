@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fractol.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 20:48:56 by zatais            #+#    #+#             */
+/*   Updated: 2025/04/01 20:48:58 by zatais           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fract_ol.h"
 
 void	usage(void)
@@ -22,7 +34,7 @@ int	main(int ac, char **av)
 		}
 		init(&f);
 		render(&f);
-		mlx_hook(&f.win, 17, 0, clean_exit, &f);
+		mlx_hook(f.win, 17, 0, clean_exit, &f);
 		mlx_key_hook(f.win, key_handler, &f);
 		mlx_mouse_hook(f.win, mouse_handler, &f);
 		mlx_loop(f.mlx);

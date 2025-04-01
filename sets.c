@@ -1,14 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sets.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zatais <zatais@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/01 20:49:20 by zatais            #+#    #+#             */
+/*   Updated: 2025/04/01 20:52:58 by zatais           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fract_ol.h"
 
 double	mandelbrot(double cr, double ci)
 {
-	int		i;
-	double	zr;
-	double	zi;
-	double	tmp;
-	double	log_zn;
-	double	nu;
+	int	i;
 
+	double (zr), (zi), (tmp), (log_zn), (nu);
 	zr = 0;
 	zi = 0;
 	i = -1;
@@ -56,13 +64,9 @@ double	julia(t_fractol *f, double zr, double zi)
 
 double	tricorn(double cr, double ci)
 {
-	int		i;
-	double	zr;
-	double	zi;
-	double	tmp;
-	double	log_zn;
-	double	nu;
+	int	i;
 
+	double (zr), (zi), (tmp), (log_zn), (nu);
 	zr = cr;
 	zi = ci;
 	i = -1;
