@@ -14,10 +14,10 @@ SRCS =	fractol.c init.c render.c sets.c utils.c events.c
 
 OBJS = $(SRCS:.c=.o)
 CC = cc -g
-CFLAGS = -Wall -Wextra -Werror -Imlx_linux
-LFLAGS = -Lmlx_linux -lmlx_Linux -lXext -lX11 -lm
+CFLAGS = -Wall -Wextra -Werror
+LFLAGS =  -L/usr/include/minilibx-linux -lmlx -lXext -lX11 -lm
 RM = rm -f
-NAME = fract_ol
+NAME = fractol
 
 all: $(NAME)
 

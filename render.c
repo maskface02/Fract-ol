@@ -22,6 +22,7 @@ double	calculate_iterations(t_fractol *f, double pr, double pi)
 {
 	double	n;
 
+	n = 0.0;
 	if (!ft_strncmp(f->name, "M", 1))
 		n = mandelbrot(pr, pi);
 	else if (!ft_strncmp(f->name, "J", 1))

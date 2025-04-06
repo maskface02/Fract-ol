@@ -16,8 +16,8 @@
 # define WIDTH 800
 # define HEIGHT 800
 
-# define MAX_ITER 50
-# include "mlx_linux/mlx.h"
+# define MAX_ITER 100
+# include "/usr/include/minilibx-linux/minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>

@@ -24,9 +24,9 @@ int	key_handler(int keysym, t_fractol *f)
 		f->shift_y += (0.5 * f->zoom);
 	else if (keysym == XK_Up)
 		f->shift_y -= (0.5 * f->zoom);
-	else if (keysym == XK_plus)
+	else if (keysym == 45)
 		f->i = (f->i + 1) % 8;
-	else if (keysym == XK_minus)
+	else if (keysym == 61)
 		f->i = (f->i - 1 + 8) % 8;
 	init_palette(f);
 	render(f);

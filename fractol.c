@@ -19,6 +19,48 @@ void	usage(void)
 	print_err(" if set is JULIA ./fractol J <real> <imag> \n", 0, 1);
 }
 
+int	check_errors(char *av)
+{
+	int (i), (comma), (errors), (comma_index);
+	(1) && (i = -1, comma = 0, errors = 0);
+	while (av[++i])
+	{
+		if (av[i] == '.')
+			(1) && (comma_index = i, comma += 1);
+	}
+	i = 0;
+	if (av[i] == '-' || av[i] == '+')
+		i++;
+	while (av[i])
+	{
+		if (i == comma_index)
+		{
+			++i;
+			continue ;
+		}
+		if (!(av[i] >= '0' && av[i] <= '9' && comma <= 1))
+			errors += 1;
+		i++;
+	}
+	if (errors)
+		return (0);
+	return (1);
+}
+
+int	check_julia(char **av)
+{
+	int	i;
+
+	i = 0;
+	if (!av[2] || !av[3])
+		return (0);
+	if (!check_errors(av[2]) || !check_errors(av[3]))
+		return (0);
+	if (ft_atod(av[2]) > 2 || ft_atod(av[3]) > 2)
+		return (0);
+	return (1);
+}
+
 int	main(int ac, char **av)
 {
 	t_fractol	f;
@@ -27,11 +69,13 @@ int	main(int ac, char **av)
 				"J", 2) || !ft_strncmp(av[1], "T", 2)))
 	{
 		f.name = av[1];
-		if (!ft_strncmp(f.name, "J", 1) && av[2] && av[3])
+		if (!ft_strncmp(f.name, "J", 1) && check_julia(av))
 		{
 			f.julia_x = ft_atod(av[2]);
 			f.julia_y = ft_atod(av[3]);
 		}
+		else
+			print_err("aaa", 0, 1);
 		init(&f);
 		render(&f);
 		mlx_hook(f.win, 17, 0, clean_exit, &f);
