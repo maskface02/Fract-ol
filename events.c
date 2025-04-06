@@ -17,9 +17,15 @@ int	key_handler(int keysym, t_fractol *f)
 	if (keysym == XK_Escape)
 		clean_exit(f);
 	else if (keysym == XK_Right)
+	{
 		f->shift_x += (0.5 * f->zoom);
+		f->max_iterations += 10;
+	}
 	else if (keysym == XK_Left)
+	{
 		f->shift_x -= (0.5 * f->zoom);
+		f->max_iterations -= 10;
+	}
 	else if (keysym == XK_Down)
 		f->shift_y += (0.5 * f->zoom);
 	else if (keysym == XK_Up)

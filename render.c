@@ -24,11 +24,11 @@ double	calculate_iterations(t_fractol *f, double pr, double pi)
 
 	n = 0.0;
 	if (!ft_strncmp(f->name, "M", 1))
-		n = mandelbrot(pr, pi);
+		n = mandelbrot(f, pr, pi);
 	else if (!ft_strncmp(f->name, "J", 1))
 		n = julia(f, pr, pi);
 	else if (!ft_strncmp(f->name, "T", 1))
-		n = tricorn(pr, pi);
+		n = tricorn(f, pr, pi);
 	return (n);
 }
 
@@ -68,11 +68,11 @@ void	render(t_fractol *f)
 			pr = (scale(x, -2, 2, WIDTH) * f->zoom) + f->shift_x;
 			pi = (scale(y, -2, 2, HEIGHT) * f->zoom) + f->shift_y;
 			nb_iter = calculate_iterations(f, pr, pi);
-			if (nb_iter >= MAX_ITER)
+			if (nb_iter >= f->max_iterations)
 				color = 0x000000;
 			else
 			{
-				t = fmod(nb_iter / MAX_ITER * (f->palette_size - 1),
+				t = fmod(nb_iter / f->max_iterations * (f->palette_size - 1),
 						f->palette_size - 1);
 				(1) && (idx1 = (int)t, idx2 = (idx1 + 1) % f->palette_size,
 					fraction = t - idx1);

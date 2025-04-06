@@ -12,7 +12,7 @@
 
 #include "fract_ol.h"
 
-double	mandelbrot(double cr, double ci)
+double	mandelbrot(t_fractol *f, double cr, double ci)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ double	mandelbrot(double cr, double ci)
 	zr = 0;
 	zi = 0;
 	i = -1;
-	while (++i < MAX_ITER)
+	while (++i < f->max_iterations)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;
@@ -28,7 +28,7 @@ double	mandelbrot(double cr, double ci)
 		zr = zr * zr - zi * zi + cr;
 		zi = tmp;
 	}
-	if (i < MAX_ITER)
+	if (i < f->max_iterations)
 	{
 		log_zn = log(zr * zr + zi * zi) / 2.0;
 		nu = log(log_zn / log(2)) / log(2);
@@ -45,7 +45,7 @@ double	julia(t_fractol *f, double zr, double zi)
 	double	nu;
 
 	i = -1;
-	while (++i < MAX_ITER)
+	while (++i < f->max_iterations)
 	{
 		if ((zi * zi + zr * zr) > 4.0)
 			break ;
@@ -53,7 +53,7 @@ double	julia(t_fractol *f, double zr, double zi)
 		zr = zr * zr - zi * zi + f->julia_x;
 		zi = tmp;
 	}
-	if (i < MAX_ITER)
+	if (i < f->max_iterations)
 	{
 		log_zn = log(zr * zr + zi * zi) / 2.0;
 		nu = log(log_zn / log(2)) / log(2);
@@ -62,7 +62,7 @@ double	julia(t_fractol *f, double zr, double zi)
 	return (i);
 }
 
-double	tricorn(double cr, double ci)
+double	tricorn(t_fractol *f, double cr, double ci)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ double	tricorn(double cr, double ci)
 	zr = cr;
 	zi = ci;
 	i = -1;
-	while (++i < MAX_ITER)
+	while (++i < f->max_iterations)
 	{
 		if ((zr * zr + zi * zi) > 4.0)
 			break ;
@@ -78,7 +78,7 @@ double	tricorn(double cr, double ci)
 		zr = zr * zr - zi * zi + cr;
 		zi = tmp;
 	}
-	if (i < MAX_ITER)
+	if (i < f->max_iterations)
 	{
 		log_zn = log(zr * zr + zi * zi) / 2.0;
 		nu = log(log_zn / log(2)) / log(2);

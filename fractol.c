@@ -69,13 +69,16 @@ int	main(int ac, char **av)
 				"J", 2) || !ft_strncmp(av[1], "T", 2)))
 	{
 		f.name = av[1];
-		if (!ft_strncmp(f.name, "J", 1) && check_julia(av))
+		if (!ft_strncmp(f.name, "J", 1))
 		{
-			f.julia_x = ft_atod(av[2]);
-			f.julia_y = ft_atod(av[3]);
+			if (check_julia(av))
+			{
+				f.julia_x = ft_atod(av[2]);
+				f.julia_y = ft_atod(av[3]);
+			}
+			else
+				print_err("Invalid Input \n", 0, 1);
 		}
-		else
-			print_err("aaa", 0, 1);
 		init(&f);
 		render(&f);
 		mlx_hook(f.win, 17, 0, clean_exit, &f);

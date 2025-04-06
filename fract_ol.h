@@ -16,7 +16,7 @@
 # define WIDTH 800
 # define HEIGHT 800
 
-# define MAX_ITER 100
+//# define MAX_ITER 100
 # include "/usr/include/minilibx-linux/minilibx-linux/mlx.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
@@ -35,7 +35,7 @@ typedef struct s_fractol
 	int		bpp;
 	int		size_line;
 	int		endian;
-	int		max_iteration;
+	int		max_iterations;
 	double	shift_x;
 	double	shift_y;
 	double	zoom;
@@ -51,8 +51,8 @@ void		init(t_fractol *f);
 void		render(t_fractol *f);
 double		julia(t_fractol *f, double zr, double zi);
 void		print_err(char *mess, int is_syscall_func, int x);
-double		mandelbrot(double cr, double ci);
-double		tricorn(double cr, double ci);
+double		mandelbrot(t_fractol *f, double cr, double ci);
+double		tricorn(t_fractol *f, double cr, double ci);
 double		ft_atod(char *s);
 int			key_handler(int keysym, t_fractol *f);
 int			mouse_handler(int button, int x, int y, t_fractol *f);

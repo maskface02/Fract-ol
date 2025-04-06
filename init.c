@@ -85,6 +85,6 @@ void	init(t_fractol *f)
 	f->shift_x = 0.0;
 	f->shift_y = 0.0;
 	f->zoom = 1.0;
-	f->i = 0;
+	(1) && (f->i = 0, f->max_iterations = 50);
 	init_palette(f);
 }
