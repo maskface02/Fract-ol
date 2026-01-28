@@ -1,0 +1,12 @@
+# Build artifacts
+*.o
+fractol
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+
+# Debug files
+*.dSYM/
