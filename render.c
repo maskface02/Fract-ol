@@ -55,12 +55,33 @@ int	lerp(int color1, int color2, double fraction)
 	return ((r << 16) | (g << 8) | b);
 }
 
-void	render(t_fractol *f)
+static int	get_pixel_color(t_fractol *f, double nb_iter)
 {
-	int (x), (y), (color), (idx1), (idx2);
-	double (pr), (pi), (nb_iter), (t), (fraction);
-	(1) && (y = -1, mlx_clear_window(f->mlx, f->win));
-	while (++y < HEIGHT)
+	int (idx1), (idx2);
+	double (t), (fraction);
+
+	if (nb_iter >= f->max_iterations)
+		return (0x000000);
+	t = fmod(nb_iter / f->max_iterations * (f->palette_size - 1),
+			f->palette_size - 1);
+	idx1 = (int)t;
+	idx2 = (idx1 + 1) % f->palette_size;
+	fraction = t - idx1;
+	return (lerp(f->palette[idx1], f->palette[idx2], fraction));
+}
+
+static void	*render_thread(void *arg)
+{
+	t_thread_data	*data;
+	t_fractol		*f;
+	int				x;
+	int				y;
+
+	double (pr), (pi), (nb_iter);
+	data = (t_thread_data *)arg;
+	f = data->f;
+	y = data->start_y - 1;
+	while (++y < data->end_y)
 	{
 		x = -1;
 		while (++x < WIDTH)
@@ -68,18 +89,34 @@ void	render(t_fractol *f)
 			pr = (scale(x, -2, 2, WIDTH) * f->zoom) + f->shift_x;
 			pi = (scale(y, -2, 2, HEIGHT) * f->zoom) + f->shift_y;
 			nb_iter = calculate_iterations(f, pr, pi);
-			if (nb_iter >= f->max_iterations)
-				color = 0x000000;
-			else
-			{
-				t = fmod(nb_iter / f->max_iterations * (f->palette_size - 1),
-						f->palette_size - 1);
-				(1) && (idx1 = (int)t, idx2 = (idx1 + 1) % f->palette_size,
-					fraction = t - idx1);
-				color = lerp(f->palette[idx1], f->palette[idx2], fraction);
-			}
-			my_put_pixel(f, x, y, color);
+			my_put_pixel(f, x, y, get_pixel_color(f, nb_iter));
 		}
 	}
+	return (NULL);
+}
+
+void	render(t_fractol *f)
+{
+	pthread_t		threads[NUM_THREADS];
+	t_thread_data	thread_data[NUM_THREADS];
+	int				i;
+	int				rows_per_thread;
+
+	mlx_clear_window(f->mlx, f->win);
+	rows_per_thread = HEIGHT / NUM_THREADS;
+	i = -1;
+	while (++i < NUM_THREADS)
+	{
+		thread_data[i].f = f;
+		thread_data[i].start_y = i * rows_per_thread;
+		if (i == NUM_THREADS - 1)
+			thread_data[i].end_y = HEIGHT;
+		else
+			thread_data[i].end_y = (i + 1) * rows_per_thread;
+		pthread_create(&threads[i], NULL, render_thread, &thread_data[i]);
+	}
+	i = -1;
+	while (++i < NUM_THREADS)
+		pthread_join(threads[i], NULL);
 	mlx_put_image_to_window(f->mlx, f->win, f->img, 0, 0);
 }

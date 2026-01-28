@@ -15,7 +15,7 @@ SRCS =	fractol.c init.c render.c sets.c utils.c events.c
 OBJS = $(SRCS:.c=.o)
 CC = cc -g
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS =  -L/usr/include/minilibx-linux -lmlx -lXext -lX11 -lm
+LFLAGS =  -L/usr/include/minilibx-linux -lmlx -lXext -lX11 -lm -pthread
 RM = rm -f
 NAME = fractol
 

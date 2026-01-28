@@ -49,9 +49,6 @@ int	check_errors(char *av)
 
 int	check_julia(char **av)
 {
-	int	i;
-
-	i = 0;
 	if (!av[2] || !av[3])
 		return (0);
 	if (!check_errors(av[2]) || !check_errors(av[3]))
@@ -84,6 +81,7 @@ int	main(int ac, char **av)
 		mlx_hook(f.win, 17, 0, clean_exit, &f);
 		mlx_key_hook(f.win, key_handler, &f);
 		mlx_mouse_hook(f.win, mouse_handler, &f);
+		mlx_hook(f.win, 6, 1L << 6, mouse_move, &f);
 		mlx_loop(f.mlx);
 	}
 	else

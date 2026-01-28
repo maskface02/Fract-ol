@@ -34,6 +34,8 @@ int	key_handler(int keysym, t_fractol *f)
 		f->i = (f->i + 1) % 8;
 	else if (keysym == 61)
 		f->i = (f->i - 1 + 8) % 8;
+	else if (keysym == XK_space)
+		f->mouse_track = !f->mouse_track;
 	init_palette(f);
 	render(f);
 	return (0);
@@ -50,12 +52,34 @@ int	clean_exit(t_fractol *f)
 
 int	mouse_handler(int button, int x, int y, t_fractol *f)
 {
-	(void)x;
-	(void)y;
+	double	mouse_re;
+	double	mouse_im;
+
+	mouse_re = (scale(x, -2, 2, WIDTH) * f->zoom) + f->shift_x;
+	mouse_im = (scale(y, -2, 2, HEIGHT) * f->zoom) + f->shift_y;
 	if (button == Button5)
+	{
 		f->zoom *= 1.05;
+		f->shift_x += (mouse_re - f->shift_x) * 0.05;
+		f->shift_y += (mouse_im - f->shift_y) * 0.05;
+	}
 	if (button == Button4)
+	{
 		f->zoom *= 0.95;
+		f->shift_x -= (mouse_re - f->shift_x) * 0.05;
+		f->shift_y -= (mouse_im - f->shift_y) * 0.05;
+	}
 	render(f);
+	return (0);
+}
+
+int	mouse_move(int x, int y, t_fractol *f)
+{
+	if (!ft_strncmp(f->name, "J", 1) && f->mouse_track)
+	{
+		f->julia_x = scale(x, -2, 2, WIDTH);
+		f->julia_y = scale(y, -2, 2, HEIGHT);
+		render(f);
+	}
 	return (0);
 }

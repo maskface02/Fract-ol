@@ -15,6 +15,7 @@
 
 # define WIDTH 800
 # define HEIGHT 800
+# define NUM_THREADS 8
 
 //# define MAX_ITER 100
 # include "/usr/include/minilibx-linux/minilibx-linux/mlx.h"
@@ -24,6 +25,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <pthread.h>
 
 typedef struct s_fractol
 {
@@ -44,7 +46,15 @@ typedef struct s_fractol
 	int		*palette;
 	int		palette_size;
 	int		i;
+	int		mouse_track;
 }			t_fractol;
+
+typedef struct s_thread_data
+{
+	t_fractol	*f;
+	int			start_y;
+	int			end_y;
+}				t_thread_data;
 
 int			ft_strncmp(char *s1, char *s2, size_t n);
 void		init(t_fractol *f);
@@ -56,6 +66,7 @@ double		tricorn(t_fractol *f, double cr, double ci);
 double		ft_atod(char *s);
 int			key_handler(int keysym, t_fractol *f);
 int			mouse_handler(int button, int x, int y, t_fractol *f);
+int			mouse_move(int x, int y, t_fractol *f);
 double		scale(double unscaled_num, double new_min, double new_max,
 				double old_max);
 int			clean_exit(t_fractol *f);
