@@ -10,3 +10,6 @@ fractol
 
 # Debug files
 *.dSYM/
+
+# CodeQL artifacts
+_codeql_detected_source_root
