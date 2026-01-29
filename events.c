@@ -61,7 +61,7 @@ int	mouse_handler(int button, int x, int y, t_fractol *f)
 	}
 	else if (button == Button4)
 	{
-		zoom_factor = 0.9;
+		zoom_factor = 1.0 / 1.1;
 		f->shift_x = mouse_re - (mouse_re - f->shift_x) * zoom_factor;
 		f->shift_y = mouse_im - (mouse_im - f->shift_y) * zoom_factor;
 		f->zoom *= zoom_factor;
