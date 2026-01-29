@@ -102,7 +102,6 @@ void	render(t_fractol *f)
 	int				i;
 	int				rows_per_thread;
 
-	mlx_clear_window(f->mlx, f->win);
 	rows_per_thread = HEIGHT / NUM_THREADS;
 	i = -1;
 	while (++i < NUM_THREADS)

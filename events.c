@@ -17,19 +17,13 @@ int	key_handler(int keysym, t_fractol *f)
 	if (keysym == XK_Escape)
 		clean_exit(f);
 	else if (keysym == XK_Right)
-	{
-		f->shift_x += (0.5 * f->zoom);
-		f->max_iterations += 10;
-	}
+		f->shift_x += (0.1 * f->zoom);
 	else if (keysym == XK_Left)
-	{
-		f->shift_x -= (0.5 * f->zoom);
-		f->max_iterations -= 10;
-	}
+		f->shift_x -= (0.1 * f->zoom);
 	else if (keysym == XK_Down)
-		f->shift_y += (0.5 * f->zoom);
+		f->shift_y += (0.1 * f->zoom);
 	else if (keysym == XK_Up)
-		f->shift_y -= (0.5 * f->zoom);
+		f->shift_y -= (0.1 * f->zoom);
 	else if (keysym == 45)
 		f->i = (f->i + 1) % 8;
 	else if (keysym == 61)
@@ -54,20 +48,23 @@ int	mouse_handler(int button, int x, int y, t_fractol *f)
 {
 	double	mouse_re;
 	double	mouse_im;
+	double	zoom_factor;
 
 	mouse_re = (scale(x, -2, 2, WIDTH) * f->zoom) + f->shift_x;
 	mouse_im = (scale(y, -2, 2, HEIGHT) * f->zoom) + f->shift_y;
 	if (button == Button5)
 	{
-		f->zoom *= 1.05;
-		f->shift_x += (mouse_re - f->shift_x) * 0.05;
-		f->shift_y += (mouse_im - f->shift_y) * 0.05;
+		zoom_factor = 1.1;
+		f->shift_x = mouse_re - (mouse_re - f->shift_x) * zoom_factor;
+		f->shift_y = mouse_im - (mouse_im - f->shift_y) * zoom_factor;
+		f->zoom *= zoom_factor;
 	}
-	if (button == Button4)
+	else if (button == Button4)
 	{
-		f->zoom *= 0.95;
-		f->shift_x -= (mouse_re - f->shift_x) * 0.05;
-		f->shift_y -= (mouse_im - f->shift_y) * 0.05;
+		zoom_factor = 0.9;
+		f->shift_x = mouse_re - (mouse_re - f->shift_x) * zoom_factor;
+		f->shift_y = mouse_im - (mouse_im - f->shift_y) * zoom_factor;
+		f->zoom *= zoom_factor;
 	}
 	render(f);
 	return (0);
